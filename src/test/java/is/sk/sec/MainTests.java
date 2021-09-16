@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -19,6 +20,8 @@ public class MainTests {
 
     @Autowired
     private MockMvc mvc;
+
+    //  integration tests
 
     @Test
     @DisplayName("Test calling /hello endpoint without authentication returns unauthorized.")
@@ -37,11 +40,10 @@ public class MainTests {
     }
 
     @Test
-    @DisplayName("Test calling /hello endpoint authenticated with a real user returns ok.")
-    public void helloAuthenticatedWithUser() throws Exception {
-        mvc.perform(get("/hello")
-                    .with(user("mary")))
-                .andExpect(content().string("Hello!"))
+    @DisplayName("Test calling /hello endpoint authenticated returns ok.")
+    @WithUserDetails("john")
+    public void helloAuthenticated2() throws Exception {
+        mvc.perform(get("/hello"))
                 .andExpect(status().isOk());
     }
 }
