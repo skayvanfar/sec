@@ -2,6 +2,7 @@ package is.sk.sec.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
@@ -13,7 +14,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
+    // the first way to config userDetailsService and passwordEncoder
+/*    @Override
     @Bean
     public UserDetailsService userDetailsService() {
         var userDetailsService = new InMemoryUserDetailsManager();
@@ -32,6 +34,22 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
+    }*/
+
+    // the second way to config userDetailsService and passwordEncoder
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        var userDetailsService = new InMemoryUserDetailsManager();
+
+        var user = User.withUsername("john")
+                .password("12345")
+                .authorities("read")
+                .build();
+
+        userDetailsService.createUser(user);
+
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
     @Override
