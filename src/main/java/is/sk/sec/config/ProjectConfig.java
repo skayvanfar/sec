@@ -1,6 +1,8 @@
 package is.sk.sec.config;
 
 import is.sk.sec.config.services.AuthenticationProviderService;
+import is.sk.sec.filters.AuthenticationLoggingFilter;
+import is.sk.sec.filters.RequestValidationFilter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 // for authorization
 @Configuration
@@ -57,7 +60,18 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
                 .regexMatchers("./(us|uk|ca)+/(en|fr).*")
                 .anyRequest().permitAll();*/
 
-        http.authorizeRequests().anyRequest().authenticated();
+    //    http.authorizeRequests().anyRequest().authenticated();
+
+        http
+                //.addFilterBefore(
+              //  new RequestValidationFilter(),
+               // BasicAuthenticationFilter.class)
+                .addFilterAfter(
+                        new AuthenticationLoggingFilter(),
+                        BasicAuthenticationFilter.class)
+                .authorizeRequests()
+                .anyRequest()
+                .permitAll();
     }
 
     @Bean
