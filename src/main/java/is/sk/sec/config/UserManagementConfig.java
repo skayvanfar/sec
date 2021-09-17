@@ -1,8 +1,11 @@
 package is.sk.sec.config;
 
 import is.sk.sec.model.User;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -12,6 +15,7 @@ import java.util.List;
 
 // for authentication
 @Configuration
+@EnableAsync
 public class UserManagementConfig {
 
     @Bean
@@ -24,5 +28,11 @@ public class UserManagementConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
+    }
+
+
+    @Bean
+    public InitializingBean initializingBean() {
+        return () -> SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
 }
