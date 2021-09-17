@@ -84,6 +84,7 @@ public class HelloController {
     }
 
     @PostMapping("/hello")
+    //    @CrossOrigin("http://localhost:8080")
     public String postHello() {
         return "Post Hello!";
     }

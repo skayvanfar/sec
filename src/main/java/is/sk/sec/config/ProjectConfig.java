@@ -19,6 +19,10 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.List;
 
 // for authorization
 @Configuration
@@ -82,6 +86,17 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 //            String httpMethod = HttpMethod.POST.name();
 //            RegexRequestMatcher r = new RegexRequestMatcher(pattern, httpMethod);
 //            c.ignoringRequestMatchers(r);
+        });
+        http.csrf().disable();
+
+        http.cors(c -> {
+            CorsConfigurationSource source = request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(List.of("*"));
+                config.setAllowedMethods(List.of("*"));
+                return config;
+            };
+            c.configurationSource(source);
         });
 
         http
