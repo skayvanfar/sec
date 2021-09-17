@@ -1,7 +1,7 @@
 package is.sk.sec.config.services;
 
 import is.sk.sec.entities.User;
-import is.sk.sec.model.CustomUserDetails;
+import is.sk.sec.config.model.CustomUserDetails;
 import is.sk.sec.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;

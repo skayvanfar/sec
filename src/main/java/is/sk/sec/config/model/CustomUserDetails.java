@@ -1,4 +1,4 @@
-package is.sk.sec.model;
+package is.sk.sec.config.model;
 
 import is.sk.sec.entities.User;
 import org.springframework.security.core.GrantedAuthority;

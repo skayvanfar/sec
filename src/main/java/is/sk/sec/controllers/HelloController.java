@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.Callable;
@@ -22,14 +23,14 @@ public class HelloController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/hello")
+/*    @GetMapping("/hello")
     public String hello(Authentication a) {
 
         //        SecurityContext context = SecurityContextHolder.getContext();
         //        Authentication a = context.getAuthentication();
 
         return "Hello, " + a.getName() + "!";
-    }
+    }*/
 
     @GetMapping("/bye")
     @Async
@@ -76,4 +77,19 @@ public class HelloController {
         model.addAttribute("products", productService.findAll());
         return "main.html";
     }*/
+
+    @GetMapping("/hello")
+    public String getHello() {
+        return "Get Hello!";
+    }
+
+    @PostMapping("/hello")
+    public String postHello() {
+        return "Post Hello!";
+    }
+
+    @PostMapping("/ciao")
+    public String postCiao() {
+        return "Post Ciao";
+    }
 }

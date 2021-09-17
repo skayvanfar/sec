@@ -1,5 +1,6 @@
 package is.sk.sec.config;
 
+import is.sk.sec.config.csrf.CustomCsrfTokenRepository;
 import is.sk.sec.config.services.AuthenticationProviderService;
 import is.sk.sec.filters.AuthenticationLoggingFilter;
 import is.sk.sec.filters.CsrfTokenLogger;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 
 // for authorization
 @Configuration
@@ -36,6 +38,10 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
         return new SCryptPasswordEncoder();
     }
 
+    @Bean
+    public CsrfTokenRepository customTokenRepository() {
+        return new CustomCsrfTokenRepository();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
@@ -65,6 +71,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
     //    http.authorizeRequests().anyRequest().authenticated();
 
         http.csrf(c -> {
+            c.csrfTokenRepository(customTokenRepository());
             c.ignoringAntMatchers("/ciao");
 
 //            HandlerMappingIntrospector i = new HandlerMappingIntrospector();
