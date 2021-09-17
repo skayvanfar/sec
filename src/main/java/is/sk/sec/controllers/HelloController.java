@@ -1,11 +1,14 @@
 package is.sk.sec.controllers;
 
+import is.sk.sec.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.concurrent.DelegatingSecurityContextCallable;
 import org.springframework.security.concurrent.DelegatingSecurityContextExecutorService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +18,9 @@ import java.util.concurrent.Executors;
 
 @RestController
 public class HelloController {
+
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/hello")
     public String hello(Authentication a) {
@@ -62,5 +68,12 @@ public class HelloController {
         } finally {
             e.shutdown();
         }
+    }
+
+    @GetMapping("/main")
+    public String main(Authentication a, Model model) {
+        model.addAttribute("username", a.getName());
+        model.addAttribute("products", productService.findAll());
+        return "main.html";
     }
 }
