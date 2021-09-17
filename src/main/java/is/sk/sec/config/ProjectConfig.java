@@ -14,28 +14,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
-    // the first way to config userDetailsService and passwordEncoder
-/*    @Override
-    @Bean
-    public UserDetailsService userDetailsService() {
-        var userDetailsService = new InMemoryUserDetailsManager();
-
-        // Credential
-        var user = User.withUsername("john")
-                .password("12345")
-                .authorities("read")
-                .build();
-
-        userDetailsService.createUser(user);
-
-        return userDetailsService;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }*/
-
     // the second way to config userDetailsService and passwordEncoder
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -48,8 +26,12 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
         userDetailsService.createUser(user);
 
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.userDetailsService(userDetailsService);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Override
