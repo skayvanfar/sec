@@ -39,8 +39,24 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
-                .defaultSuccessUrl("/main", true);
+        http.formLogin().defaultSuccessUrl("/main", true);
+
+        http.httpBasic();
+
+    /*
+        Spring SEPL
+        String expression = "hasAuthority('read') and !hasAuthority('delete')";
+        http.authorizeRequests()
+                .anyRequest().access(expression)
+                .anyRequest().hasRole("ADMIN")
+                .anyRequest().access("T(java.time.LocalTime).now().isAfter(T(java.time.LocalTime).of(12, 0))
+                .mvcMatchers( "/a/b/**").authenticated()
+                .mvcMatchers("/hello").hasRole("ADMIN")
+                .mvcMatchers("/ciao").hasRole("MANAGER")
+                .mvcMatchers( "/product/{code:^[0-9]*$}").permitAll() // regex
+                .regexMatchers("./(us|uk|ca)+/(en|fr).*")
+                .anyRequest().permitAll();*/
+
         http.authorizeRequests().anyRequest().authenticated();
     }
 
