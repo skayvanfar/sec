@@ -2,6 +2,7 @@ package is.sk.sec.config;
 
 import is.sk.sec.config.services.AuthenticationProviderService;
 import is.sk.sec.filters.AuthenticationLoggingFilter;
+import is.sk.sec.filters.CsrfTokenLogger;
 import is.sk.sec.filters.RequestValidationFilter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 // for authorization
 @Configuration
@@ -69,6 +71,9 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(
                         new AuthenticationLoggingFilter(),
                         BasicAuthenticationFilter.class)
+                .addFilterAfter(
+                        new CsrfTokenLogger(),
+                        CsrfFilter.class)
                 .authorizeRequests()
                 .anyRequest()
                 .permitAll();
