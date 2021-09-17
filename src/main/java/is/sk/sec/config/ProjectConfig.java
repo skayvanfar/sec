@@ -64,6 +64,19 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
     //    http.authorizeRequests().anyRequest().authenticated();
 
+        http.csrf(c -> {
+            c.ignoringAntMatchers("/ciao");
+
+//            HandlerMappingIntrospector i = new HandlerMappingIntrospector();
+//            MvcRequestMatcher r = new MvcRequestMatcher(i, "/ciao");
+//            c.ignoringRequestMatchers(r);
+
+//            String pattern = ".*[0-9].*";
+//            String httpMethod = HttpMethod.POST.name();
+//            RegexRequestMatcher r = new RegexRequestMatcher(pattern, httpMethod);
+//            c.ignoringRequestMatchers(r);
+        });
+
         http
                 //.addFilterBefore(
               //  new RequestValidationFilter(),

@@ -70,10 +70,10 @@ public class HelloController {
         }
     }
 
-    @GetMapping("/main")
+/*    @GetMapping("/main")
     public String main(Authentication a, Model model) {
         model.addAttribute("username", a.getName());
         model.addAttribute("products", productService.findAll());
         return "main.html";
-    }
+    }*/
 }
