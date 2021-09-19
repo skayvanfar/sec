@@ -14,6 +14,7 @@
     <modules>
         <module>callauthorizationserver</module>
         <module>blackboarding</module>
+        <module>blackboarding-authserv</module>
     </modules>
 
 
