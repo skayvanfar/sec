@@ -8,6 +8,7 @@
         <module>separation</module>
         <module>sso</module>
         <module>authorizationserver</module>
+        <module>resourceserver</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
