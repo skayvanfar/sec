@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>authentication</module>
+        <module>businesslogic</module>
     </modules>
 
     <properties>
