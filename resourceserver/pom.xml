@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>callauthorizationserver</module>
+        <module>blackboarding</module>
     </modules>
 
 
