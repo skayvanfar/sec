@@ -15,6 +15,7 @@
         <module>passwordgrandtype</module>
         <module>authorizationcodegranttype</module>
         <module>clientcredentialsgranttype</module>
+        <module>refreshtokengranttype</module>
     </modules>
 
 
