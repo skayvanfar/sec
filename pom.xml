@@ -6,6 +6,7 @@
     <modules>
         <module>simple</module>
         <module>separation</module>
+        <module>sso</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
